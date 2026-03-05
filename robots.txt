@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+
+# Pages publiques utiles
+Allow: /index.html
+Allow: /services.html
+Allow: /rendezvous.html
+Allow: /gallery.html
+Allow: /avis.html
+Allow: /contact.html
+Allow: /blog.html
+Allow: /about.html
+Allow: /faq.html
+
+# Ressources
+Allow: /css/
+Allow: /js/
+Allow: /assets/
+Allow: /video/
+
+# Pages à ne pas indexer
+Disallow: /admin.html
+Disallow: /offline.html
+Disallow: /404.html
+
+# Sitemap
+Sitemap: https://www.miralocks.com/sitemap.xml

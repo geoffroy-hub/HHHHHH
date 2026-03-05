@@ -1,0 +1,208 @@
+/*
+ * optimize.css — MiraLocks — Corrections finales & safe-area
+ * À charger EN DERNIER dans chaque page HTML
+ * ✅ CORRECTIONS :
+ *   - safe-area-inset renforcé sur iPhone notch + home bar
+ *   - Vidéos inline : forcer playsinline sur tous les <video>
+ *   - Overflow sécurisé
+ *   - Loaders supprimés
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   1. SUPPRESSION LOADERS
+═══════════════════════════════════════════════════════════ */
+.page-loader, .site-loader, .intro-overlay, .splash-screen, .preloader {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body { visibility: visible !important; opacity: 1 !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   2. OVERFLOW
+═══════════════════════════════════════════════════════════ */
+body { overflow-x: hidden; }
+
+.container, .hero-inner, .services,
+.gallery, .gallery-photos, .gallery-videos, .form-row {
+  max-width: 100%;
+}
+
+img, video, iframe, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+img { content-visibility: auto; }
+
+/* ✅ FIX VIDÉO GLOBAL : forcer playsinline sur toutes les vidéos du site */
+/* Certains anciens navigateurs Android ignorent l'attribut JS, on le force en CSS */
+video {
+  -webkit-playsinline: "";
+}
+
+/* ═══════════════════════════════════════════════════════════
+   3. VISIBILITÉ TEXTES & FONDS
+═══════════════════════════════════════════════════════════ */
+body    { background: var(--white-off, #f5fbf7); color: var(--text, #0c2818); }
+section { background: var(--white); color: var(--text, #0c2818); }
+
+h1, h2, h3, h4, h5, h6 { color: var(--text, #0c2818); }
+p      { color: var(--gray-700, #253d30); }
+.muted { color: var(--muted, #5a7a66); }
+
+.header { background: rgba(12,51,32,.97); }
+.brand h1 { color: var(--gold, #c9a84c); }
+#main-nav a { color: var(--white); }
+
+.footer { background: var(--emerald-deep, #0c3320); color: var(--white); }
+.footer h3, .footer h4 { color: var(--white); }
+.footer p, .footer small { color: var(--gray-300); }
+
+.card { background: var(--white); color: var(--text, #0c2818); border: 1px solid var(--gray-200, #dceee4); }
+.card h3 { color: var(--text, #0c2818); }
+.card p  { color: var(--gray-600, #3d5c4a); }
+
+.cta, a.cta, button.primary, .primary {
+  background: var(--gold-gradient, linear-gradient(135deg, #c9a84c 0%, #e8d080 50%, #c9a84c 100%));
+  color: var(--black);
+}
+
+input, textarea, select {
+  background: var(--white);
+  color: var(--text, #0c2818);
+  border: 2px solid var(--gray-200, #dceee4);
+}
+input:focus, textarea:focus, select:focus {
+  border-color: var(--gold, #c9a84c);
+  outline: none;
+}
+
+.whatsapp-float { background: var(--gold-gradient, #c9a84c); color: var(--black); font-weight: 700; z-index: 1000; }
+.admin-float    { background: rgba(12,51,32,.90); border: 2px solid var(--gold, #c9a84c); z-index: 1000; }
+
+.hero { background: linear-gradient(135deg, #e8f5ee 0%, #ffffff 100%); }
+.hero h2 { color: var(--text, #0c2818); }
+
+/* ═══════════════════════════════════════════════════════════
+   4. SAFE AREA — iPhone notch, Dynamic Island, home bar
+   (valeurs de secours 0px pour les appareils sans encoche)
+═══════════════════════════════════════════════════════════ */
+@supports (padding: max(0px)) {
+  @media (max-width: 767px) {
+    .header {
+      padding-top: max(0px, env(safe-area-inset-top, 0px));
+    }
+    .footer {
+      padding-bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 24px));
+    }
+    #main-nav {
+      padding-top: max(80px, calc(env(safe-area-inset-top, 0px) + 70px));
+      padding-bottom: max(20px, calc(env(safe-area-inset-bottom, 0px) + 20px));
+    }
+    .whatsapp-float {
+      bottom: max(14px, calc(env(safe-area-inset-bottom, 0px) + 14px));
+      right:  max(14px, env(safe-area-inset-right, 0px));
+    }
+    .admin-float {
+      bottom: max(80px, calc(env(safe-area-inset-bottom, 0px) + 80px));
+      right:  max(14px, env(safe-area-inset-right, 0px));
+    }
+    .lightbox-close {
+      top:   max(10px, calc(env(safe-area-inset-top, 0px) + 10px));
+      right: max(10px, env(safe-area-inset-right, 0px));
+    }
+    .lightbox-counter {
+      bottom: max(20px, calc(env(safe-area-inset-bottom, 0px) + 16px));
+    }
+    .lightbox-prev {
+      left: max(6px, env(safe-area-inset-left, 0px));
+    }
+    .lightbox-next {
+      right: max(6px, env(safe-area-inset-right, 0px));
+    }
+    #ml-cookie-banner {
+      padding-bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 16px));
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   5. ACCESSIBILITÉ — MOUVEMENTS RÉDUITS
+═══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .page-loader { display: none !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   6. IMPRESSION
+═══════════════════════════════════════════════════════════ */
+@media print {
+  .header, .footer, .whatsapp-float, .admin-float,
+  .hamburger-menu, .nav-overlay, #scroll-progress,
+  .lightbox-swipe { display: none !important; }
+  body  { color: #000 !important; background: #fff !important; }
+  a     { color: #000 !important; text-decoration: underline; }
+  .container { max-width: 100%; padding: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   7. CORRECTIONS MOBILE FINALES
+═══════════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+  .card, .gallery-item, .cta, a.cta, button.primary {
+    transition-duration: .18s !important;
+  }
+  .card { transform: none !important; }
+}
+
+@media (max-width: 1023px) {
+  .card { transform: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   8. OPTIMISATIONS PERFORMANCE
+   • content-visibility : skip rendu éléments hors viewport
+   • font-display       : swap déjà géré via Google Fonts URL
+   • aspect-ratio       : réservation d'espace avant chargement image (anti-CLS)
+═══════════════════════════════════════════════════════════ */
+
+/* Sections hors viewport : ne pas calculer leur layout immédiatement */
+.footer,
+section:not(:first-of-type) {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 400px; /* hauteur estimée pour le scroll */
+}
+
+/* Réservation d'espace pour les images de galerie (anti-CLS) */
+.gallery-item {
+  aspect-ratio: 3 / 4;        /* photos portrait */
+}
+.gallery-item.video {
+  aspect-ratio: 16 / 9;       /* vidéos paysage */
+}
+
+/* Lazy images : fond gris pendant le chargement */
+img[loading="lazy"] {
+  background: var(--gray-100, #f0f7f3);
+}
+
+/* Éviter les repaints coûteux sur le header sticky */
+.header {
+  transform: translateZ(0);     /* force composite layer */
+  -webkit-transform: translateZ(0);
+}
+
+/* Désactiver les transitions non essentielles sur mobile bas de gamme */
+@media (max-width: 767px) and (prefers-reduced-data: reduce) {
+  * { transition: none; animation: none; }
+}
